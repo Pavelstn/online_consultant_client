@@ -1,0 +1,61 @@
+<%
+  begin
+    settings= Setting.where(:ispublic=>true).first
+    aaa=  JSON.parse(settings.param)
+    showItFlag= aaa['online_consultant_show']
+  rescue
+    showItFlag= false
+  end
+
+%>
+
+<% if showItFlag %>
+
+    <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+    <%= javascript_include_tag "online_consultant" %>
+    <script>var csrf_token2 = "<%= form_authenticity_token %>"</script>
+    <style>
+      #online_consultant_main {
+        width: 310px;
+        height: 413px;
+        padding: 0.5em;
+        z-index: 100;
+      }
+    </style>
+
+    <div>
+      <div class="ui-widget-content online_consultant_main">
+        <div class="row o_c_m_header">
+          <div class="col-md-1" style="padding-left: 7px;"><i class="icon-comment icon-white"></i></div>
+          <div class="col-md-10" style="font-size: 15px"><b>Напишите нам, мы онлайн!</b></div>
+          <div class="col-md-1 hand_on_hover" style="padding-right: 7px;" id="hide_o_c_m_main">
+            <i class="icon-remove-circle icon-white"></i></div>
+        </div>
+
+        <div class="o_c_m_message_area">
+
+          <ul class="no-decor" style="margin: 5px;" id="o_c_m_msgList">
+          </ul>
+          <div id='ocm_endList'> </div>
+        </div>
+        <div class="row">
+          <div class="col-md-9">
+            <textarea rows="3" style="margin-left: 7px; margin-top: 5px; resize: none;" id="o_c_m_textArea"></textarea>
+          </div>
+          <div class="col-md-3" style="margin-left: 2px;  margin-top: 5px;">
+            <button id="o_c_m_sendMsg" class="btn btn-small btn-success" type="button" style="padding-left: 6px; padding-right: 6px; padding-top: 23px; padding-bottom: 23px;">Отправить</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="online_consultant_tab_right hand_on_hover online_consultant_tab_side">
+        <cpan class="o_c_m_show_main_button">
+          <i class="icon-comment icon-white"></i>
+          <b>Напишите нам, мы онлайн!</b>
+        </cpan>
+        <i class="icon-remove-circle icon-white o_c_m_hide_tab_button" title="Скрыть"></i>
+      </div>
+      <div class="online_consultant_tab_right_min hand_on_hover online_consultant_tab_side_min"> </div>
+
+    </div>
+<% end %>
